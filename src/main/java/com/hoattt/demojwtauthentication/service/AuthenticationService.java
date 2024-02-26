@@ -1,13 +1,14 @@
 package com.hoattt.demojwtauthentication.service;
 
-import com.hoattt.demojwtauthentication.dto.JwtAuthenticationResponse;
-import com.hoattt.demojwtauthentication.dto.RefreshTokenRequest;
-import com.hoattt.demojwtauthentication.dto.SignUpRequest;
-import com.hoattt.demojwtauthentication.dto.SigninRequest;
+import com.hoattt.demojwtauthentication.dto.response.JwtAuthenticationResponse;
+import com.hoattt.demojwtauthentication.dto.request.RefreshTokenRequest;
+import com.hoattt.demojwtauthentication.dto.request.SignUpRequest;
+import com.hoattt.demojwtauthentication.dto.request.SigninRequest;
+import com.hoattt.demojwtauthentication.dto.response.SignUpResponse;
 import com.hoattt.demojwtauthentication.entity.User;
 
 public interface AuthenticationService {
-    User signup(SignUpRequest signUpRequest);
+    SignUpResponse signup(SignUpRequest signUpRequest);
 
     JwtAuthenticationResponse signin(SigninRequest signinRequest);
 

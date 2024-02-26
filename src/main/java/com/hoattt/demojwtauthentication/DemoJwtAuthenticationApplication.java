@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
@@ -23,11 +24,11 @@ public class DemoJwtAuthenticationApplication implements CommandLineRunner {
         if(null == adminAccount){
             User user = new User();
             user.setEmail("admin@gmail.com");
-            user.setFirstName("admin");
-            user.setLastName("admin");
+            user.setName("admin");
             user.setRole(Role.ADMIN);
             user.setPassword(new BCryptPasswordEncoder().encode("admin"));
             userRepository.save(user);
         }
     }
+
 }

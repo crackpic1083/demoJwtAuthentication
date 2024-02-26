@@ -1,4 +1,4 @@
-package com.hoattt.demojwtauthentication.dto;
+package com.hoattt.demojwtauthentication.dto.response;
 
 import lombok.Data;
 
