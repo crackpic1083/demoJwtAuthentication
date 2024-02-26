@@ -31,6 +31,4 @@ public class Company {
     private String email;
     private BigDecimal courseProfit;
 
-    public Company(String companyUnitTest, String mail, BigDecimal courseProfit) {
-    }
 }

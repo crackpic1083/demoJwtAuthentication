@@ -7,7 +7,6 @@ import com.hoattt.demojwtauthentication.dto.response.CompanySearchResponse;
 import com.hoattt.demojwtauthentication.dto.response.CourseSearchResponse;
 import com.hoattt.demojwtauthentication.entity.Company;
 import com.hoattt.demojwtauthentication.entity.Course;
-import com.hoattt.demojwtauthentication.mapper.CompanyMapper;
 import com.hoattt.demojwtauthentication.repository.CompanyRepository;
 import com.hoattt.demojwtauthentication.service.CompanyService;
 import lombok.Data;
@@ -28,8 +27,7 @@ import java.util.Optional;
 @Data
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
-    private final CompanyMapper companyMapper;
-
+    private final ModelMapper modelMapper;
     @Override
     public CompanyCreateUpdateResponse addCompany(CompanyCreateUpdateRequest companyCreateUpdateRequest) {
         String email = companyCreateUpdateRequest.getEmail();
@@ -37,9 +35,9 @@ public class CompanyServiceImpl implements CompanyService {
             throw new IllegalArgumentException("Existed Company Email");
         }
         else {
-            Company company = companyMapper.toCompany(companyCreateUpdateRequest);
+            Company company = modelMapper.map(companyCreateUpdateRequest, Company.class);
             Company companyCreated = companyRepository.save(company);
-            return companyMapper.toCompanyCreateUpdateResponse(companyCreated);
+            return modelMapper.map(companyCreated, CompanyCreateUpdateResponse.class);
         }
     }
 
@@ -47,7 +45,7 @@ public class CompanyServiceImpl implements CompanyService {
     public ResponseEntity<CompanyCreateUpdateResponse> findById(Integer companyId) {
         Optional<Company> companySearched = companyRepository.findById(companyId);
         if (companySearched.isPresent()) {
-            CompanyCreateUpdateResponse companyDto = companyMapper.toCompanyCreateUpdateResponse1(companySearched);
+            CompanyCreateUpdateResponse companyDto = modelMapper.map(companySearched, CompanyCreateUpdateResponse.class);
             return ResponseEntity.ok(companyDto);
         } else {
             return ResponseEntity.notFound().build(); //tra ve 404 not found
@@ -82,7 +80,8 @@ public class CompanyServiceImpl implements CompanyService {
         //List entity -> List dto
         List<CompanySearchResponse> companySearchResponseList = new ArrayList<>();
         for(Company co:companies){
-            CompanySearchResponse companySearchResponse = companyMapper.toCompanySearchResponse(co);
+            ModelMapper modelMapper = new ModelMapper();
+            CompanySearchResponse companySearchResponse = modelMapper.map(co, CompanySearchResponse.class);
             companySearchResponseList.add(companySearchResponse);
         }
 
@@ -101,9 +100,9 @@ public class CompanyServiceImpl implements CompanyService {
             if (company.isEmpty()) {
                 throw new RuntimeException("Can not find course with provided companyId");
             } else {
-                Company company1 = companyMapper.toCompany(companyCreateUpdateRequest);
+                Company company1 = modelMapper.map(companyCreateUpdateRequest, Company.class);
                 Company companyUpdated = companyRepository.save(company1);
-                return companyMapper.toCompanyCreateUpdateResponse(companyUpdated);
+                return modelMapper.map(companyUpdated, CompanyCreateUpdateResponse.class);
             }
         }
     }

@@ -22,6 +22,4 @@ public class CompanyCreateUpdateRequest {
     @PositiveOrZero(message = "Course_profit must not be negative")
     BigDecimal courseProfit;
 
-    public CompanyCreateUpdateRequest(String companyUnitTest, String mail, BigDecimal courseProfit) {
-    }
 }
